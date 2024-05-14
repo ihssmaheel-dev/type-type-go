@@ -24,28 +24,35 @@ const TypingTest = () => {
 
 	useEffect(() => {
 		let interval: ReturnType<typeof setInterval> | undefined;
-		if(isTyping && timeLeft > 0) {
-			interval = setInterval(() => {
+		if (isTyping && timeLeft > 0) {
+				interval = setInterval(() => {
+						setTimeLeft(prevTimeLeft => {
+								const newTimeLeft = prevTimeLeft - 1;
+								if (newTimeLeft === 0) {
+										clearInterval(interval);
+										setIsTyping(false);
+								}
+								return newTimeLeft;
+						});
 
-				setTimeLeft(timeLeft - 1);
-				let correctChars = charIndex - mistakes;
-				let totalTime = MAX_TIME - timeLeft;
+						const correctChars = charIndex - mistakes;
+						const totalTime = MAX_TIME - timeLeft;
 
-				let cpm = correctChars * (60 / totalTime);
-				cpm = cpm < 0 || !cpm || cpm === Infinity ? 0 : cpm;
-				setCPM(Math.round(cpm));
+						const cpm = Math.round(correctChars * (60 / totalTime));
+						setCPM(cpm < 0 || isNaN(cpm) ? 0 : cpm);
 
-				let wpm = Math.round((correctChars / 5 / totalTime) * 60);
-				wpm = wpm < 0 || !wpm || wpm === Infinity ? 0 : wpm;
-				setWPM(wpm);
-			}, 1000)
-		} else if (timeLeft === 0){
-			clearInterval(interval);
-			setIsTyping(false);
+						const wpm = Math.round((correctChars / 5 / totalTime) * 60);
+						setWPM(wpm < 0 || isNaN(wpm) ? 0 : wpm);
+				}, 1000);
+		} else if (timeLeft === 0) {
+				clearInterval(interval);
+				setIsTyping(false);
 		} else {
-			clearInterval(interval);
+				clearInterval(interval);
 		}
-	}, [isTyping, timeLeft])
+
+		return () => clearInterval(interval);
+	}, [isTyping, timeLeft]);
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const characters = charRefs.current;
