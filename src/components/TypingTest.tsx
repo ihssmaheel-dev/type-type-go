@@ -53,7 +53,7 @@ const TypingTest = () => {
 					))
 				}
 			</div>
-			<div className="flex justify-between items-center mt-4 pt-2.5 text-xl border-t border-solid border-slate-900">
+			<div className="flex justify-between items-center mt-4 pt-2.5 text-xl border-t border-solid border-slate-900 text-slate-900">
 				<p>Time Left: <strong>{timeLeft}</strong></p>
 				<p>Mistakes: <strong>{mistakes}</strong></p>
 				<p>WPM: <strong>{WPM}</strong></p>
