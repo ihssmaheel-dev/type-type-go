@@ -14,9 +14,11 @@ const TypingTest = () => {
 	const [CPM, setCPM] = useState(0);
 	const inputRef = useRef(null);
 	const charRefs = useRef([]);
+	const [correctWrong, setCorrectWrong] = useState([])
 
 	useEffect(() => {
 		inputRef.current.focus();
+		setCorrectWrong(Array(charRefs.current.length).fill(''));
 	}, []);
 
 	const handleChange = (e) => {
@@ -30,9 +32,11 @@ const TypingTest = () => {
 
 			if(typedChar === currentChar.textContent) {
 				setCharIndex(charIndex + 1);
+				correctWrong[charIndex] = "correct";
 			} else {
 				setCharIndex(charIndex + 1);
 				setMistakes(mistakes + 1);
+				correctWrong[charIndex] = "wrong";
 			}
 
 			if(charIndex === characters.length - 1) setIsTyping(false);
@@ -47,7 +51,7 @@ const TypingTest = () => {
 				<input type="text" className='absolute z-[-999] opacity-0' ref={inputRef} onChange={handleChange} />
 				{
 					paragraph.split("").map((char, index) => (
-						<span className={`text-2xl leading-9 select-none cursor-text text-slate-600 ${index === charIndex ? "border-b-4 border-solid border-slate-900" : ""}`} ref={(e) => charRefs.current[index] = e}>
+						<span className={`text-2xl leading-9 select-none cursor-text text-slate-600 ${index === charIndex ? "border-b-4 border-solid border-slate-900" : ""} ${correctWrong[index] === "correct" ? "bg-green-500 text-slate-900" : ""} ${correctWrong[index] === "wrong" ? "bg-red-500 text-slate-900" : ""}`} ref={(e) => charRefs.current[index] = e}>
 							{char}
 						</span>
 					))
