@@ -21,6 +21,31 @@ const TypingTest = () => {
 		setCorrectWrong(Array(charRefs.current.length).fill(''));
 	}, []);
 
+	useEffect(() => {
+		let interval;
+		if(isTyping && timeLeft > 0) {
+			interval = setInterval(() => {
+
+				setTimeLeft(timeLeft - 1);
+				let correctChars = charIndex - mistakes;
+				let totalTime = MAX_TIME - timeLeft;
+
+				let cpm = correctChars * (60 / totalTime);
+				cpm = cpm < 0 || !cpm || cpm === Infinity ? 0 : cpm;
+				setCPM(parseInt(cpm, 10));
+
+				let wpm = Math.round((correctChars / 5 / totalTime) * 60);
+				wpm = wpm < 0 || !wpm || wpm === Infinity ? 0 : wpm;
+				setWPM(wpm);
+			}, 1000)
+		} else if (timeLeft === 0){
+			clearInterval(interval);
+			setIsTyping(false);
+		} else {
+			clearInterval(interval);
+		}
+	}, [isTyping, timeLeft])
+
 	const handleChange = (e) => {
 		const characters = charRefs.current;
 		let currentChar = charRefs.current[charIndex];
