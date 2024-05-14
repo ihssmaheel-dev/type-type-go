@@ -47,7 +47,7 @@ const TypingTest = () => {
 				<input type="text" className='absolute z-[-999] opacity-0' ref={inputRef} onChange={handleChange} />
 				{
 					paragraph.split("").map((char, index) => (
-						<span className={`text-2xl leading-9 select-none cursor-text ${index === charIndex ? "border-b border-solid border-slate-900" : ""}`} ref={(e) => charRefs.current[index] = e}>
+						<span className={`text-2xl leading-9 select-none cursor-text ${index === charIndex ? "border-b-4 border-solid border-slate-900" : ""}`} ref={(e) => charRefs.current[index] = e}>
 							{char}
 						</span>
 					))
