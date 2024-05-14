@@ -3,6 +3,8 @@ import { MdRefresh } from 'react-icons/md'
 
 const paragraph = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident rerum facilis fugiat totam? Earum sequi ex delectus adipisci magnam laborum sunt excepturi quis minus, in dolores voluptate reiciendis veniam, culpa facilis repellat eveniet accusantium hic maiores totam repellendus nesciunt nostrum pariatur beatae! Unde facilis, tempora eius qui laudantium nisi adipisci."
 
+type CorrectWrongType = "correct" | "wrong" | "";
+
 const TypingTest = () => {
 	const MAX_TIME = 60;
 	const [timeLeft, setTimeLeft] = useState(MAX_TIME);
@@ -11,17 +13,17 @@ const TypingTest = () => {
 	const [isTyping, setIsTyping] = useState(false);
 	const [WPM, setWPM] = useState(0);
 	const [CPM, setCPM] = useState(0);
-	const inputRef = useRef(null);
-	const charRefs = useRef([]);
-	const [correctWrong, setCorrectWrong] = useState([])
+	const inputRef = useRef<HTMLInputElement | null>(null);
+	const charRefs = useRef<(HTMLSpanElement | null)[]>([]);
+	const [correctWrong, setCorrectWrong] = useState<CorrectWrongType[]>([]);
 
 	useEffect(() => {
-		inputRef.current.focus();
+		inputRef.current?.focus();
 		setCorrectWrong(Array(charRefs.current.length).fill(''));
 	}, []);
 
 	useEffect(() => {
-		let interval;
+		let interval: ReturnType<typeof setInterval> | undefined;
 		if(isTyping && timeLeft > 0) {
 			interval = setInterval(() => {
 
@@ -31,7 +33,7 @@ const TypingTest = () => {
 
 				let cpm = correctChars * (60 / totalTime);
 				cpm = cpm < 0 || !cpm || cpm === Infinity ? 0 : cpm;
-				setCPM(parseInt(cpm, 10));
+				setCPM(Math.round(cpm));
 
 				let wpm = Math.round((correctChars / 5 / totalTime) * 60);
 				wpm = wpm < 0 || !wpm || wpm === Infinity ? 0 : wpm;
@@ -45,16 +47,16 @@ const TypingTest = () => {
 		}
 	}, [isTyping, timeLeft])
 
-	const handleChange = (e) => {
+	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const characters = charRefs.current;
-		let currentChar = charRefs.current[charIndex];
+		let currentChar = charRefs.current[charIndex]?.textContent;
 		let typedChar = e.target.value.slice(-1);
 		if(charIndex < characters.length && timeLeft > 0) {
 			if(!isTyping) {
 				setIsTyping(true);
 			}
 
-			if(typedChar === currentChar.textContent) {
+			if(typedChar === currentChar) {
 				setCharIndex(charIndex + 1);
 				correctWrong[charIndex] = "correct";
 			} else {
@@ -77,7 +79,7 @@ const TypingTest = () => {
 		setCPM(0);
 		setWPM(0);
 		setCorrectWrong(Array(charRefs.current.length).fill(""));
-		inputRef.current.focus();
+		inputRef.current?.focus();
 	}
 	
 	return (
