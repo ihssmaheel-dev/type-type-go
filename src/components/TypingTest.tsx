@@ -4,7 +4,6 @@ import { MdRefresh } from 'react-icons/md'
 const paragraph = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident rerum facilis fugiat totam? Earum sequi ex delectus adipisci magnam laborum sunt excepturi quis minus, in dolores voluptate reiciendis veniam, culpa facilis repellat eveniet accusantium hic maiores totam repellendus nesciunt nostrum pariatur beatae! Unde facilis, tempora eius qui laudantium nisi adipisci."
 
 const TypingTest = () => {
-	
 	const MAX_TIME = 60;
 	const [timeLeft, setTimeLeft] = useState(MAX_TIME);
 	const [mistakes, setMistakes] = useState(0);
@@ -69,6 +68,17 @@ const TypingTest = () => {
 			setIsTyping(false);
 		}
 	}
+
+	const reset = () => {
+		setIsTyping(false);
+		setTimeLeft(MAX_TIME);
+		setCharIndex(0);
+		setMistakes(0);
+		setCPM(0);
+		setWPM(0);
+		setCorrectWrong(Array(charRefs.current.length).fill(""));
+		inputRef.current.focus();
+	}
 	
 	return (
 		<div className='max-w-4xl m-4 p-8 rounded-lg bg-gray-200 shadow'>
@@ -95,7 +105,7 @@ const TypingTest = () => {
 				<p>Mistakes: <strong>{mistakes}</strong></p>
 				<p>WPM: <strong>{WPM}</strong></p>
 				<p>CPM: <strong>{CPM}</strong></p>
-				<button type='button' className='px-3 py-2 outline-none border border-solid border-gray-400 bg-slate-900 rounded-md cursor-pointer text-white text-base transition-all duration-500 hover:bg-slate-800'>
+				<button type='button' className='px-3 py-2 outline-none border border-solid border-gray-400 bg-slate-900 rounded-md cursor-pointer text-white text-base transition-all duration-500 hover:bg-slate-800' onClick={reset}>
 					<MdRefresh />
 				</button>
 			</div>
