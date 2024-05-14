@@ -58,11 +58,19 @@ const TypingTest = () => {
 
 			if(typedChar === currentChar) {
 				setCharIndex(charIndex + 1);
-				correctWrong[charIndex] = "correct";
+				setCorrectWrong((prevCorrectWrong) => {
+					const newCorrectWrong = [...prevCorrectWrong];
+					newCorrectWrong[charIndex] = "correct";
+					return newCorrectWrong;
+				})
 			} else {
 				setCharIndex(charIndex + 1);
 				setMistakes(mistakes + 1);
-				correctWrong[charIndex] = "wrong";
+				setCorrectWrong((prevCorrectWrong) => {
+					const newCorrectWrong = [...prevCorrectWrong];
+					newCorrectWrong[charIndex] = "wrong";
+					return newCorrectWrong;
+				})
 			}
 
 			if(charIndex === characters.length - 1) setIsTyping(false);
