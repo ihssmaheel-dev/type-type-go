@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import TextDisplay from './TextDisplay';
 import UserInput from './UserInput';
 import Stats from './Stats';
@@ -28,77 +28,78 @@ const TypingTest = () => {
 	useEffect(() => {
 		let interval: ReturnType<typeof setInterval> | undefined;
 		if (isTyping && timeLeft > 0) {
-				interval = setInterval(() => {
-						setTimeLeft(prevTimeLeft => {
-								const newTimeLeft = prevTimeLeft - 1;
-								if (newTimeLeft === 0) {
-										clearInterval(interval);
-										setIsTyping(false);
-								}
+			interval = setInterval(() => {
+				setTimeLeft(prevTimeLeft => {
+					const newTimeLeft = prevTimeLeft - 1;
+					if (newTimeLeft === 0) {
+						clearInterval(interval);
+						setIsTyping(false);
+					}
 
-								return newTimeLeft;
-						});
+					return newTimeLeft;
+				});
 
-						const correctChars = charIndex - mistakes;
-						const totalTime = maxTime - timeLeft;
+				const correctChars = charIndex - mistakes;
+				const totalTime = maxTime - timeLeft;
 
-						setCPM(calculateCPM(correctChars, totalTime));
-						setWPM(calculateWPM(correctChars, totalTime));
-				}, 1000);
+				setCPM(calculateCPM(correctChars, totalTime));
+				setWPM(calculateWPM(correctChars, totalTime));
+			}, 1000);
 		} else if (timeLeft === 0) {
-				clearInterval(interval);
-				setIsTyping(false);
+			clearInterval(interval);
+			setIsTyping(false);
 		} else {
-				clearInterval(interval);
+			clearInterval(interval);
 		}
 
 		return () => clearInterval(interval);
 	}, [isTyping, timeLeft]);
 
-	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+	const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
 		const characters = charRefs.current;
 
 		if(isTyping) {
-			if ((e.nativeEvent as any).inputType === "deleteContentBackward") {
+			if ((e.nativeEvent as any).inputType === 'deleteContentBackward') {
 				if (charIndex > 0) {
-						setCharIndex(charIndex - 1);
-						if (correctWrong[charIndex - 1] === "wrong") {
-							setMistakes(prevMistakes => prevMistakes - 1);
-						}
-						setCorrectWrong(prevCorrectWrong => {
-								const newCorrectWrong = [...prevCorrectWrong];
-								newCorrectWrong[charIndex] = "";
-								return newCorrectWrong;
-						});
-				}
+					setCharIndex((prevIndex) => prevIndex - 1);
+					if (correctWrong[charIndex - 1] === 'wrong') {
+						setMistakes((prevMistakes) => prevMistakes - 1);
+					}
+					setCorrectWrong((prevCorrectWrong) => {
+						const newCorrectWrong = [...prevCorrectWrong];
+						newCorrectWrong[charIndex - 1] = '';
 	
+						return newCorrectWrong;
+					});
+				}
 				return;
 			}
 		}
 
-		let currentChar = charRefs.current[charIndex]?.textContent;
-		let typedChar = e.target.value.slice(-1);
-		if(charIndex < characters.length && timeLeft > 0) {
-			if(!isTyping) {
-				setIsTyping(true);
-			}
-			
-			setCharIndex(charIndex + 1);
+		const currentChar = characters[charIndex]?.textContent;
+		const typedChar = e.target.value.slice(-1);
+
+		if (charIndex < characters.length && timeLeft > 0) {
+			if(!isTyping) setIsTyping(true);
+			setCharIndex((prevIndex) => prevIndex + 1);
 
 			setCorrectWrong((prevCorrectWrong) => {
 				const newCorrectWrong = [...prevCorrectWrong];
-				newCorrectWrong[charIndex] = typedChar === currentChar ? "correct" : "wrong";
-				if(typedChar !== currentChar) {
-					setMistakes(prevMistakes => prevMistakes + 1);
+				newCorrectWrong[charIndex] = typedChar === currentChar ? 'correct' : 'wrong';
+				if (typedChar !== currentChar) {
+					setMistakes((prevMistakes) => prevMistakes + 1);
 				}
+
 				return newCorrectWrong;
 			});
 
-			if(charIndex === characters.length - 1) setIsTyping(false);
+			if (charIndex === characters.length - 1) setIsTyping(false);
 		} else {
 			setIsTyping(false);
 		}
-	}
+	},
+		[charIndex, timeLeft, isTyping]
+	);
 
 	const reset = () => {
 		setIsTyping(false);
@@ -110,20 +111,20 @@ const TypingTest = () => {
 		setCorrectWrong(Array(charRefs.current.length).fill(""));
 		inputRef.current?.focus();
 	}
-	
+
 	return (
 		<div className='max-w-4xl m-4 p-8 rounded-lg bg-gray-200 shadow'>
-			<UserInput 
+			<UserInput
 				inputRef={inputRef}
 				handleChange={handleChange}
 			/>
-			<TextDisplay 
+			<TextDisplay
 				paragraph={paragraph}
 				charIndex={charIndex}
 				correctWrong={correctWrong}
 				charRefs={charRefs}
 			/>
-			<Stats timeLeft={timeLeft} mistakes={mistakes} WPM={WPM} CPM={CPM} reset={reset}/>
+			<Stats timeLeft={timeLeft} mistakes={mistakes} WPM={WPM} CPM={CPM} reset={reset} />
 		</div>
 	)
 }
