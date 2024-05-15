@@ -18,7 +18,7 @@ const UserInput: React.FC<UserInputProps> = ({
 	};
 
 	return (
-		<input type="text" className='' ref={inputRef} onChange={handleChange} onKeyDown={handleKeyDown} />
+		<input type="text" className='absolute z-[-999] opacity-0' ref={inputRef} onChange={handleChange} onKeyDown={handleKeyDown} />
 	);
 }
 
