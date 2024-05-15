@@ -10,8 +10,8 @@ const paragraph = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Prov
 type CorrectWrongType = "correct" | "wrong" | "";
 
 const TypingTest = () => {
-	const MAX_TIME = 60;
-	const [timeLeft, setTimeLeft] = useState(MAX_TIME);
+	const [maxTime, setMaxTime] = useState(60);
+	const [timeLeft, setTimeLeft] = useState(maxTime);
 	const [mistakes, setMistakes] = useState(0);
 	const [charIndex, setCharIndex] = useState(0)
 	const [isTyping, setIsTyping] = useState(false);
@@ -41,7 +41,7 @@ const TypingTest = () => {
 						});
 
 						const correctChars = charIndex - mistakes;
-						const totalTime = MAX_TIME - timeLeft;
+						const totalTime = maxTime - timeLeft;
 
 						setCPM(calculateCPM(correctChars, totalTime));
 						setWPM(calculateWPM(correctChars, totalTime));
@@ -101,7 +101,7 @@ const TypingTest = () => {
 
 	const reset = () => {
 		setIsTyping(false);
-		setTimeLeft(MAX_TIME);
+		setTimeLeft(maxTime);
 		setCharIndex(0);
 		setMistakes(0);
 		setCPM(0);
