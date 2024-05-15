@@ -59,6 +59,23 @@ const TypingTest = () => {
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const characters = charRefs.current;
+
+		if ((e.nativeEvent as any).inputType === "deleteContentBackward") {
+			if (charIndex > 0) {
+					setCharIndex(charIndex - 1);
+					if (correctWrong[charIndex - 1] === "wrong") {
+						setMistakes(prevMistakes => prevMistakes - 1);
+					}
+					setCorrectWrong(prevCorrectWrong => {
+							const newCorrectWrong = [...prevCorrectWrong];
+							newCorrectWrong[charIndex] = "";
+							return newCorrectWrong;
+					});
+			}
+
+			return;
+		}
+
 		let currentChar = charRefs.current[charIndex]?.textContent;
 		let typedChar = e.target.value.slice(-1);
 		if(charIndex < characters.length && timeLeft > 0) {
