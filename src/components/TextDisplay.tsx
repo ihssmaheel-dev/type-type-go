@@ -18,6 +18,7 @@ const TextDisplay: React.FC<TextDisplayProps> = ({
 			{
 				paragraph.split("").map((char, index) => (
 					<span
+					key={index}
 					className={`
 						text-2xl leading-9 select-none cursor-text text-slate-600 
 						${index === charIndex ? "border-b-4 border-solid border-slate-900" : ""} 
