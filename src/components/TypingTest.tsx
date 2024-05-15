@@ -3,6 +3,7 @@ import { MdRefresh } from 'react-icons/md'
 import TextDisplay from './TextDisplay';
 import UserInput from './UserInput';
 import Stats from './Stats';
+import { calculateCPM, calculateWPM } from '../Utils/helper';
 
 const paragraph = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident rerum facilis fugiat totam? Earum sequi ex delectus adipisci magnam laborum sunt excepturi quis minus, in dolores voluptate reiciendis veniam, culpa facilis repellat eveniet accusantium hic maiores totam repellendus nesciunt nostrum pariatur beatae! Unde facilis, tempora eius qui laudantium nisi adipisci."
 
@@ -35,17 +36,15 @@ const TypingTest = () => {
 										clearInterval(interval);
 										setIsTyping(false);
 								}
+
 								return newTimeLeft;
 						});
 
 						const correctChars = charIndex - mistakes;
 						const totalTime = MAX_TIME - timeLeft;
 
-						const cpm = Math.round(correctChars * (60 / totalTime));
-						setCPM(cpm < 0 || isNaN(cpm) ? 0 : cpm);
-
-						const wpm = Math.round((correctChars / 5 / totalTime) * 60);
-						setWPM(wpm < 0 || isNaN(wpm) ? 0 : wpm);
+						setCPM(calculateCPM(correctChars, totalTime));
+						setWPM(calculateWPM(correctChars, totalTime));
 				}, 1000);
 		} else if (timeLeft === 0) {
 				clearInterval(interval);
