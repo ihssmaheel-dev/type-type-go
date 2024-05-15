@@ -1,5 +1,5 @@
 import React from 'react'
-import { MdRefresh } from 'react-icons/md';
+import ResetButton from './ResetButton';
 
 interface StatsProps {
 	timeLeft: number;
@@ -22,11 +22,9 @@ const Stats: React.FC<StatsProps> = ({
 				<p>Mistakes: <strong>{mistakes}</strong></p>
 				<p>WPM: <strong>{WPM}</strong></p>
 				<p>CPM: <strong>{CPM}</strong></p>
-				<button type='button' className='px-3 py-2 outline-none border border-solid border-gray-400 bg-slate-900 rounded-md cursor-pointer text-white text-base transition-all duration-500 hover:bg-slate-800' onClick={reset}>
-					<MdRefresh />
-				</button>
+				<ResetButton reset={reset}/>
 			</div>
 	)
 }
 
-export default Stats
+export default Stats;
