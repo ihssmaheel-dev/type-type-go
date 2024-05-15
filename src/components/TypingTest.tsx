@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { MdRefresh } from 'react-icons/md'
 import TextDisplay from './TextDisplay';
 import UserInput from './UserInput';
 import Stats from './Stats';
