@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { MdRefresh } from 'react-icons/md'
 import TextDisplay from './TextDisplay';
 import UserInput from './UserInput';
+import Stats from './Stats';
 
 const paragraph = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident rerum facilis fugiat totam? Earum sequi ex delectus adipisci magnam laborum sunt excepturi quis minus, in dolores voluptate reiciendis veniam, culpa facilis repellat eveniet accusantium hic maiores totam repellendus nesciunt nostrum pariatur beatae! Unde facilis, tempora eius qui laudantium nisi adipisci."
 
@@ -105,15 +106,7 @@ const TypingTest = () => {
 				correctWrong={correctWrong}
 				charRefs={charRefs}
 			/>
-			<div className="flex justify-between items-center mt-4 pt-2.5 text-xl border-t border-solid border-slate-900 text-slate-900">
-				<p>Time Left: <strong>{timeLeft}</strong></p>
-				<p>Mistakes: <strong>{mistakes}</strong></p>
-				<p>WPM: <strong>{WPM}</strong></p>
-				<p>CPM: <strong>{CPM}</strong></p>
-				<button type='button' className='px-3 py-2 outline-none border border-solid border-gray-400 bg-slate-900 rounded-md cursor-pointer text-white text-base transition-all duration-500 hover:bg-slate-800' onClick={reset}>
-					<MdRefresh />
-				</button>
-			</div>
+			<Stats timeLeft={timeLeft} mistakes={mistakes} WPM={WPM} CPM={CPM} reset={reset}/>
 		</div>
 	)
 }
