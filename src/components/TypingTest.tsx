@@ -3,12 +3,17 @@ import TextDisplay from './TextDisplay';
 import UserInput from './UserInput';
 import Stats from './Stats';
 import { calculateCPM, calculateWPM } from '../Utils/helper';
+import { faker } from '@faker-js/faker';
 
-const paragraph = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident rerum facilis fugiat totam? Earum sequi ex delectus adipisci magnam laborum sunt excepturi quis minus, in dolores voluptate reiciendis veniam, culpa facilis repellat eveniet accusantium hic maiores totam repellendus nesciunt nostrum pariatur beatae! Unde facilis, tempora eius qui laudantium nisi adipisci.";
+const generateRandomParagraph = (count: number) => {
+	return faker.word.words(count).toLowerCase();
+}
 
 type CorrectWrongType = "correct" | "wrong" | "";
 
 const TypingTest = () => {
+	const [maxWords, setMaxWords] = useState(50);
+	const [paragraph, setParagraph] = useState(generateRandomParagraph(maxWords));
 	const [maxTime, setMaxTime] = useState(60);
 	const [timeLeft, setTimeLeft] = useState(maxTime);
 	const [mistakes, setMistakes] = useState(0);
@@ -89,6 +94,8 @@ const TypingTest = () => {
 	};
 
 	const reset = () => {
+		const newParagraph = generateRandomParagraph(maxWords);
+		setParagraph(newParagraph);
 		setIsTyping(false);
 		setTimeLeft(maxTime);
 		setCharIndex(0);
