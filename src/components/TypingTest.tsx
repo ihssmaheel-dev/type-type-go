@@ -29,15 +29,7 @@ const TypingTest = () => {
 		let interval: ReturnType<typeof setInterval> | undefined;
 		if (isTyping && timeLeft > 0) {
 			interval = setInterval(() => {
-				setTimeLeft(prevTimeLeft => {
-					const newTimeLeft = prevTimeLeft - 1;
-					if (newTimeLeft === 0) {
-						clearInterval(interval);
-						setIsTyping(false);
-					}
-
-					return newTimeLeft;
-				});
+				setTimeLeft(prevTimeLeft => (prevTimeLeft - 1));
 
 				const correctChars = charIndex - mistakes;
 				const totalTime = maxTime - timeLeft;
@@ -45,10 +37,8 @@ const TypingTest = () => {
 				setCPM(calculateCPM(correctChars, totalTime));
 				setWPM(calculateWPM(correctChars, totalTime));
 			}, 1000);
-		} else if (timeLeft === 0) {
-			clearInterval(interval);
-			setIsTyping(false);
 		} else {
+			setIsTyping(false);
 			clearInterval(interval);
 		}
 
@@ -58,22 +48,20 @@ const TypingTest = () => {
 	const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
 		const characters = charRefs.current;
 
-		if(isTyping) {
-			if ((e.nativeEvent as any).inputType === 'deleteContentBackward') {
-				if (charIndex > 0) {
-					setCharIndex((prevIndex) => prevIndex - 1);
-					if (correctWrong[charIndex - 1] === 'wrong') {
-						setMistakes((prevMistakes) => prevMistakes - 1);
-					}
-					setCorrectWrong((prevCorrectWrong) => {
-						const newCorrectWrong = [...prevCorrectWrong];
-						newCorrectWrong[charIndex - 1] = '';
-	
-						return newCorrectWrong;
-					});
+		if (isTyping && (e.nativeEvent as any).inputType === 'deleteContentBackward') {
+			if (charIndex > 0) {
+				setCharIndex((prevIndex) => prevIndex - 1);
+				if (correctWrong[charIndex - 1] === 'wrong') {
+					setMistakes((prevMistakes) => prevMistakes - 1);
 				}
-				return;
+				setCorrectWrong((prevCorrectWrong) => {
+					const newCorrectWrong = [...prevCorrectWrong];
+					newCorrectWrong[charIndex - 1] = '';
+
+					return newCorrectWrong;
+				});
 			}
+			return;
 		}
 
 		const currentChar = characters[charIndex]?.textContent;
