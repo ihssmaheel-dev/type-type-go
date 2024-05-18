@@ -4,14 +4,17 @@ import UserInput from './UserInput';
 import Stats from './Stats';
 import { calculateCPM, calculateWPM } from '../Utils/helper';
 import { faker } from '@faker-js/faker';
+import TypingModeSelector from './TypingModeSelector';
 
 const generateRandomParagraph = (count: number) => {
 	return faker.word.words(count).toLowerCase();
 }
 
 type CorrectWrongType = "correct" | "wrong" | "";
+type ModeType = "words" | "time";
 
 const TypingTest = () => {
+	const [mode, setMode] = useState<ModeType>("words");
 	const [maxWords, setMaxWords] = useState(50);
 	const [paragraph, setParagraph] = useState(generateRandomParagraph(maxWords));
 	const [maxTime, setMaxTime] = useState(60);
@@ -111,9 +114,26 @@ const TypingTest = () => {
 		inputRef.current?.focus();
 	}
 
+	const handleTimeChange = (time: number) => {
+		setMaxTime(time);
+		setTimeLeft(time);
+		reset();
+	}
+
+	const handleWordChange = (words: number) => {
+		setMaxWords(words);
+		reset();
+	}
+
+	const handleModeChange = (mode: ModeType) => {
+		setMode(mode);
+		reset();
+	}
+
 	return (
-		<div className='min-h-screen bg-slate-900 grid place-items-center font-noto-sans-mono tracking-wider px-12' onClick={handleFocus}>
-			<div className={`max-w-4xl m-4 p-8 rounded-lg bg-gray-200 shadow`}>
+		<div className='min-h-screen bg-slate-900 flex flex-col items-center justify-center font-noto-sans-mono tracking-wider px-12' onClick={handleFocus}>
+			<TypingModeSelector mode={mode} maxWords={maxWords} maxTime={maxTime} onChangeTime={handleTimeChange} onChangeWords={handleWordChange} onModeChange={handleModeChange}/>
+			<div className={`w-10/12 m-4 p-8 rounded-lg bg-gray-200 shadow`}>
 					<UserInput
 						inputRef={inputRef}
 						handleKeyDown={handleKeyDown}
