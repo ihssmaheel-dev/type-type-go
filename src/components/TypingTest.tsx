@@ -25,6 +25,10 @@ const TypingTest = () => {
 	const charRefs = useRef<(HTMLSpanElement | null)[]>([]);
 	const [correctWrong, setCorrectWrong] = useState<CorrectWrongType[]>([]);
 
+	const handleFocus = () => {
+		inputRef.current?.focus();
+	}
+
 	useEffect(() => {
 		inputRef.current?.focus();
 		setCorrectWrong(Array(charRefs.current.length).fill(''));
@@ -108,18 +112,20 @@ const TypingTest = () => {
 	}
 
 	return (
-		<div className='max-w-4xl m-4 p-8 rounded-lg bg-gray-200 shadow'>
-			<UserInput
-				inputRef={inputRef}
-				handleKeyDown={handleKeyDown}
-			/>
-			<TextDisplay
-				paragraph={paragraph}
-				charIndex={charIndex}
-				correctWrong={correctWrong}
-				charRefs={charRefs}
-			/>
-			<Stats timeLeft={timeLeft} mistakes={mistakes} WPM={WPM} CPM={CPM} reset={reset} />
+		<div className='min-h-screen bg-slate-900 grid place-items-center font-noto-sans-mono tracking-wider px-12' onClick={handleFocus}>
+			<div className={`max-w-4xl m-4 p-8 rounded-lg bg-gray-200 shadow`}>
+					<UserInput
+						inputRef={inputRef}
+						handleKeyDown={handleKeyDown}
+					/>
+					<TextDisplay
+						paragraph={paragraph}
+						charIndex={charIndex}
+						correctWrong={correctWrong}
+						charRefs={charRefs}
+					/>
+					<Stats timeLeft={timeLeft} mistakes={mistakes} WPM={WPM} CPM={CPM} reset={reset} />
+			</div>
 		</div>
 	)
 }
