@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+get_code_context.js
+code_context.txt
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
