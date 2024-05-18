@@ -55,11 +55,11 @@ const TypingTest = () => {
 
 		if (isTyping && e.code === 'Backspace') {
 			if(charIndex < 0) return;
-
+			
 			setCharIndex((prevIndex) => prevIndex - 1);
-			if (correctWrong[charIndex - 1] === 'wrong') {
-				setMistakes((prevMistakes) => prevMistakes - 1);
-			}
+			const isWrong = correctWrong[charIndex - 1] === 'wrong'; 
+			isWrong && setMistakes((prevMistakes) => prevMistakes - 1); 
+
 			setCorrectWrong((prevCorrectWrong) => {
 				const newCorrectWrong = [...prevCorrectWrong];
 				newCorrectWrong[charIndex - 1] = '';
