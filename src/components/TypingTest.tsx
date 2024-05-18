@@ -63,6 +63,7 @@ const TypingTest = () => {
 			setCorrectWrong((prevCorrectWrong) => {
 				const newCorrectWrong = [...prevCorrectWrong];
 				newCorrectWrong[charIndex - 1] = '';
+
 				return newCorrectWrong;
 			});
 		}
