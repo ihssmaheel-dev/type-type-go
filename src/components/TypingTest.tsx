@@ -6,6 +6,8 @@ import TypingModeSelector from './TypingModeSelector';
 import UserInput from './UserInput';
 import TextDisplay from './TextDisplay';
 import Stats from './Stats';
+import TypingTestFooter from './TypingTestFooter';
+import TypingContainer from "./TypingContainer";
 
 
 type ModeType = "words" | "time" | "lorem";
@@ -63,11 +65,8 @@ const TypingTest = () => {
 				onChangeWords={setMaxWords}
 				onModeChange={handleModeChange}
 			/>
-			<div id="typing-container" className='w-10/12 max-h-80 overflow-y-auto m-4 p-8 rounded-lg bg-gray-200 shadow scroll scrollbar-none overscroll-auto scroll-smooth'>
-				<UserInput inputRef={inputRef} handleKeyDown={handleKeydown} />
-				<TextDisplay paragraph={paragraph} charIndex={charIndex} correctWrong={correctWrong} charRefs={charRefs}/>
-			</div>
-			<Stats mode={mode} timeLeft={timeLeft} mistakes={mistakes} accuracy={accuracy} WPM={WPM} CPM={CPM} reset={resetAll}/>
+			<TypingContainer inputRef={inputRef} handleKeydown={handleKeydown} paragraph={paragraph} charIndex={charIndex} correctWrong={correctWrong} charRefs={charRefs}/>
+			<TypingTestFooter mode={mode} timeLeft={timeLeft} mistakes={mistakes} accuracy={accuracy} WPM={WPM} CPM={CPM} reset={resetAll}/>
 		</div>
 	)
 }
