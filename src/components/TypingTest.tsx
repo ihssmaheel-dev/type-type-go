@@ -23,7 +23,7 @@ const TypingTest = () => {
   const [mode, setMode] = useState<ModeType>("words");
   const [maxWords, setMaxWords] = useState(50);
   const [paragraph, setParagraph] = useState(generateRandomParagraph(maxWords, mode));
-  const [maxTime, setMaxTime] = useState(60);
+  const [maxTime, setMaxTime] = useState(60000);
   const [timeLeft, setTimeLeft] = useState(maxTime);
   const [mistakes, setMistakes] = useState(0);
   const [charIndex, setCharIndex] = useState(0);
