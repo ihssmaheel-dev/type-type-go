@@ -16,7 +16,7 @@ interface ModeSelectorOptionsProps {
 
 const ModeSelectorOptions: React.FC<ModeSelectorOptionsProps> = ({ mode, timeOptions, maxTime, onChangeTime, wordOptions, maxWords, onChangeWords }) => {
   return (
-    <div className="w-full flex items-center justify-between">
+    <div className="w-9/12 flex items-center justify-between">
       {mode === 'time' ? (
         <TimeSelectionOptions timeOptions={timeOptions} maxTime={maxTime} onChangeTime={onChangeTime} />
       ) : (

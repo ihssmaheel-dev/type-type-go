@@ -15,12 +15,12 @@ interface ModeSelectorContainerProps {
 
 const Divider: React.FC = () => {
 	return (
-		<span className="text-slate-600 text-xl mx-10 font-extrabold">|</span>
+		<span className="text-slate-700 text-xl mx-6 font-extrabold">|</span>
 	)
 }
 
 const ModeSelectorContainer: React.FC<ModeSelectorContainerProps> = ({ mode, maxWords, maxTime, onModeChange, onChangeTime, onChangeWords }) => {
-	const timeOptions = [15, 30, 60];
+	const timeOptions = [15, 30, 60, 120];
 	const wordOptions = [10, 25, 50, 100];
 
 	return (

@@ -26,7 +26,6 @@ const ModeSelector: React.FC<ModeSelectorProps> = ({ mode, onModeChange }) => {
             isActive={mode === key}
             onClick={() => onModeChange(key as ModeType)}
           />
-          {key !== 'lorem' && <span className="text-slate-600 mx-6"></span>}
         </React.Fragment>
       ))}
     </div>
