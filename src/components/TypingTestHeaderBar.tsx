@@ -1,9 +1,6 @@
 import React from 'react';
 import TypingOptionsBar from './TypingOptionsBar';
-import ModeSelector from './ModeSelector';
-import ModeSelectorOptions from './ModeSelectorOptions';
 import ModeSelectorContainer from './ModeSelectorContainer';
-import RefreshButton from './RefreshButton';
 import SoundToggleButton from './SoundToggleButton';
 
 type ModeType = "time" | "words" | "lorem";
