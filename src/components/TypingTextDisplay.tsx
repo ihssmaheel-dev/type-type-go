@@ -1,13 +1,13 @@
 import React from 'react'
 
-interface TextDisplayProps {
+interface TypingTextDisplayProps {
 	paragraph: string;
 	charIndex: number;
 	correctWrong: ("correct" | "wrong" | "")[];
 	charRefs: React.MutableRefObject<(HTMLSpanElement | null)[]>
 }
 
-const TextDisplay: React.FC<TextDisplayProps> = ({ 
+const TypingTextDisplay: React.FC<TypingTextDisplayProps> = ({ 
 	paragraph,
 	charIndex,
 	correctWrong,
@@ -35,4 +35,4 @@ const TextDisplay: React.FC<TextDisplayProps> = ({
 	)
 }
 
-export default TextDisplay;
+export default TypingTextDisplay;

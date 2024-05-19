@@ -1,11 +1,7 @@
-import TypingTest from './components/TypingTest'
+import TypingTestApp from './components/TypingTestApp'
 
 const App = () => {
-	return (
-		<div>
-			<TypingTest />
-		</div>
-	)
+	return <TypingTestApp />;
 }
 
 export default App

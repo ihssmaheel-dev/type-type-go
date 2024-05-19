@@ -1,8 +1,8 @@
 import React from 'react'
-import UserInput from "./UserInput";
-import TextDisplay from "./TextDisplay";
+import UserInputField from "./UserInputField";
+import TypingTextDisplay from "./TypingTextDisplay";
 
-interface TypingContainerProps {
+interface TypingDisplayContainerProps {
 	inputRef: React.RefObject<HTMLInputElement>;
 	handleKeydown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 	paragraph: string;
@@ -11,7 +11,7 @@ interface TypingContainerProps {
 	charRefs: React.MutableRefObject<(HTMLSpanElement | null)[]>
 }
 
-const TypingContainer: React.FC<TypingContainerProps> = ({
+const TypingDisplayContainer: React.FC<TypingDisplayContainerProps> = ({
 	inputRef,
 	handleKeydown,
 	paragraph,
@@ -21,10 +21,10 @@ const TypingContainer: React.FC<TypingContainerProps> = ({
 }) => {
 	return (
 		<div id="typing-container" className='w-10/12 max-h-80 overflow-y-auto m-4 p-8 rounded-lg bg-gray-200 shadow scroll scrollbar-none overscroll-auto scroll-smooth'>
-			<UserInput inputRef={inputRef} handleKeyDown={handleKeydown} />
-			<TextDisplay paragraph={paragraph} charIndex={charIndex} correctWrong={correctWrong} charRefs={charRefs} />
+			<UserInputField inputRef={inputRef} handleKeyDown={handleKeydown} />
+			<TypingTextDisplay paragraph={paragraph} charIndex={charIndex} correctWrong={correctWrong} charRefs={charRefs} />
 		</div>
 	)
 }
 
-export default TypingContainer;
+export default TypingDisplayContainer;

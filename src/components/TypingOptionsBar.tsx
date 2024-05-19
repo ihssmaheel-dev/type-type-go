@@ -1,6 +1,6 @@
 import { FaAt, FaHashtag } from 'react-icons/fa'
 
-const TypingTestOptions = () => {
+const TypingOptionsBar = () => {
 	return (
 		<>
 			<button className="flex items-center">
@@ -14,4 +14,4 @@ const TypingTestOptions = () => {
 	)
 }
 
-export default TypingTestOptions
+export default TypingOptionsBar

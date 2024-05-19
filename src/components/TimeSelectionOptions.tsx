@@ -1,12 +1,12 @@
 import React from 'react';
 
-interface TimeOptionsProps {
+interface TimeSelectionOptionsProps {
 	timeOptions: number[];
 	maxTime: number;
 	onChangeTime: (time: number) => void;
 }
 
-const TimeOptions: React.FC<TimeOptionsProps> = ({ timeOptions, maxTime, onChangeTime }) => {
+const TimeSelectionOptions: React.FC<TimeSelectionOptionsProps> = ({ timeOptions, maxTime, onChangeTime }) => {
 	const handleTimeOptionClick = (option: number) => {
 		onChangeTime(option);
 	};
@@ -26,4 +26,4 @@ const TimeOptions: React.FC<TimeOptionsProps> = ({ timeOptions, maxTime, onChang
 	);
 };
 
-export default TimeOptions;
+export default TimeSelectionOptions;

@@ -1,15 +1,15 @@
 import React from 'react';
 import { FaAlignLeft, FaFont, FaHourglass } from 'react-icons/fa';
-import TypingTestModeButton from './TypingTestModeButton';
+import ModeToggleButton from './ModeToggleButton';
 
 type ModeType = "time" | "words" | "lorem";
 
-interface TypingModeSelectorProps {
+interface ModeSelectorProps {
   mode: ModeType;
   onModeChange: (mode: ModeType) => void;
 }
 
-const TypingModeSelector: React.FC<TypingModeSelectorProps> = ({ mode, onModeChange }) => {
+const ModeSelector: React.FC<ModeSelectorProps> = ({ mode, onModeChange }) => {
   const icons = {
     time: <FaHourglass className='mr-2' />,
     words: <FaFont className='mr-2' />,
@@ -20,7 +20,7 @@ const TypingModeSelector: React.FC<TypingModeSelectorProps> = ({ mode, onModeCha
     <>
       {Object.keys(icons).map((key) => (
         <React.Fragment key={key}>
-          <TypingTestModeButton
+          <ModeToggleButton
             mode={key as ModeType}
             icon={icons[key as ModeType]}
             isActive={mode === key}
@@ -33,4 +33,4 @@ const TypingModeSelector: React.FC<TypingModeSelectorProps> = ({ mode, onModeCha
   );
 };
 
-export default TypingModeSelector;
+export default ModeSelector;

@@ -1,12 +1,12 @@
 import React from 'react';
 
-interface WordOptionsProps {
+interface WordSelectionOptionsProps {
 	wordOptions: number[];
 	maxWords: number;
 	onChangeWords: (words: number) => void;
 }
 
-const WordOptions: React.FC<WordOptionsProps> = ({ wordOptions, maxWords, onChangeWords }) => {
+const WordSelectionOptions: React.FC<WordSelectionOptionsProps> = ({ wordOptions, maxWords, onChangeWords }) => {
 	const handleWordOptionClick = (option: number) => {
 		onChangeWords(option);
 	};
@@ -26,4 +26,4 @@ const WordOptions: React.FC<WordOptionsProps> = ({ wordOptions, maxWords, onChan
 	);
 };
 
-export default WordOptions;
+export default WordSelectionOptions;

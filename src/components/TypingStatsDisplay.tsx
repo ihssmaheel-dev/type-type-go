@@ -1,9 +1,8 @@
 import React from 'react'
-import ResetButton from './ResetButton';
 
 type ModeType = "time" | "words" | "lorem";
 
-interface StatsProps {
+interface TypingStatsDisplayProps {
 	mode: ModeType 
 	timeLeft: number;
 	mistakes: number;
@@ -12,7 +11,7 @@ interface StatsProps {
 	CPM: number;
 }
 
-const Stats: React.FC<StatsProps> = ({
+const TypingStatsDisplay: React.FC<TypingStatsDisplayProps> = ({
 	mode,
 	timeLeft,
 	mistakes,
@@ -33,4 +32,4 @@ const Stats: React.FC<StatsProps> = ({
 	)
 }
 
-export default Stats;
+export default TypingStatsDisplay;

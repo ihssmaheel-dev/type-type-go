@@ -1,11 +1,11 @@
 import React from 'react'
 
-interface UserInputProps {
+interface UserInputFieldProps {
 	inputRef: React.RefObject<HTMLInputElement>;
 	handleKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 }
 
-const UserInput: React.FC<UserInputProps> = ({ 
+const UserInputField: React.FC<UserInputFieldProps> = ({ 
 	inputRef,
 	handleKeyDown
 }) => {
@@ -15,4 +15,4 @@ const UserInput: React.FC<UserInputProps> = ({
 	);
 }
 
-export default UserInput;
+export default UserInputField;
