@@ -8,6 +8,7 @@ import TextDisplay from './TextDisplay';
 import Stats from './Stats';
 import TypingTestFooter from './TypingTestFooter';
 import TypingContainer from "./TypingContainer";
+import TypingTestHeader from './TypingTestHeader';
 
 
 type ModeType = "words" | "time" | "lorem";
@@ -57,7 +58,7 @@ const TypingTest = () => {
 
 	return (
 		<div className='min-h-screen px-12 bg-slate-900 flex flex-col items-center justify-center font-noto-sans-mono tracking-wider' onClick={handleFocus}>
-			<TypingModeSelector 
+			<TypingTestHeader 
 				mode={mode}
 				maxWords={maxWords}
 				maxTime={maxTime}
