@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react"
 import { calculateAccuracy, calculateCPM, calculateWPM } from "../utils/helper";
 
 type CorrectWrongType = "correct" | "wrong" | "";
-const useTypingLogic = (paragraph: string, maxTime: number, timeLeft: number, startTimer) => {
+const useTypingLogic = (paragraph: string, maxTime: number, timeLeft: number, startTimer: () => void) => {
 	const [charIndex, setCharIndex] = useState(0);
 	const [mistakes, setMistakes] = useState(0);
 	const [WPM, setWPM] = useState(0);
