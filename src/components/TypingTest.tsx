@@ -11,7 +11,7 @@ const generateRandomParagraph = (count: number) => {
 }
 
 type CorrectWrongType = "correct" | "wrong" | "";
-type ModeType = "words" | "time";
+type ModeType = "time" | "words" | "lorem";
 
 const TypingTest = () => {
 	const [mode, setMode] = useState<ModeType>("words");

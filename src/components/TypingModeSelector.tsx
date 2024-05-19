@@ -1,8 +1,7 @@
 import React from 'react';
-import { FaAt, FaFont, FaHashtag } from 'react-icons/fa';
-import { RiTimerFill } from 'react-icons/ri';
+import { FaAlignLeft, FaAt, FaFont, FaHashtag, FaHourglass } from 'react-icons/fa';
 
-type ModeType = "words" | "time";
+type ModeType = "time" | "words" | "lorem" ;
 
 interface TypingModeSelectorProps {
 	mode: string;
@@ -28,11 +27,15 @@ const TypingModeSelector: React.FC<TypingModeSelectorProps> = ({ mode, maxWords,
 			</button>
 			<span className="text-slate-600 mx-10 font-extrabold">|</span>
 			<button className={`flex items-center ${mode === 'time' ? 'text-slate-900' : ''}`} onClick={() => onModeChange("time")}>
-				<RiTimerFill className="mr-2" /> time
+				<FaHourglass className="mr-2" /> time
 			</button>
 			<span className="text-slate-600 mx-6"></span>
 			<button className={`flex items-center ${mode === 'words' ? 'text-slate-900' : ''}`} onClick={() => onModeChange("words")}>
 				<FaFont className="mr-2" /> words
+			</button>
+			<span className="text-slate-600 mx-6"></span>
+			<button className={`flex items-center ${mode === 'lorem' ? 'text-slate-900' : ''}`} onClick={() => onModeChange("lorem")}>
+				<FaAlignLeft className="mr-2" /> lorem
 			</button>
 			<span className="text-slate-600 mx-10 font-extrabold">|</span>
 			<div className="w-full flex items-center justify-between">
