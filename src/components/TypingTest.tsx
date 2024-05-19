@@ -138,6 +138,9 @@ const TypingTest = () => {
 
   const handleModeChange = (mode: ModeType) => {
     setMode(mode);
+		if(mode === "time") {
+			setMaxWords(300);
+		}
     reset();
   }
 
