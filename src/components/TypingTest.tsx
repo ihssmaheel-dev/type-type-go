@@ -18,7 +18,7 @@ const TypingTest = () => {
 
 	const { paragraph, generateNewParagraph } = useParagraphGenerator(mode, maxWords);
 	const { timeLeft, startTimer, resetTimer, updateMaxTime } = useTimer(maxTime);
-	const { charIndex, charRefs, mistakes, WPM, CPM, accuracy, correctWrong, handleKeydown, resetTyping } = useTypingLogic(paragraph, maxTime, timeLeft);
+	const { charIndex, charRefs, mistakes, WPM, CPM, accuracy, correctWrong, handleKeydown, resetTyping } = useTypingLogic(paragraph, maxTime, timeLeft, startTimer);
 
 	const inputRef = useRef<HTMLInputElement | null>(null);
 
@@ -40,10 +40,17 @@ const TypingTest = () => {
 
 		generateNewParagraph();
 		resetTyping();
+		resetTimer();
 	};
 
 	const handleFocus = () => {
 		inputRef.current?.focus();
+	}
+
+	const resetAll = () => {
+		generateNewParagraph();
+		resetTyping();
+		resetTimer();
 	}
 
 	return (
@@ -60,7 +67,7 @@ const TypingTest = () => {
 				<UserInput inputRef={inputRef} handleKeyDown={handleKeydown} />
 				<TextDisplay paragraph={paragraph} charIndex={charIndex} correctWrong={correctWrong} charRefs={charRefs}/>
 			</div>
-			<Stats mode={mode} timeLeft={timeLeft} mistakes={mistakes} accuracy={accuracy} WPM={WPM} CPM={CPM} reset={resetTyping}/>
+			<Stats mode={mode} timeLeft={timeLeft} mistakes={mistakes} accuracy={accuracy} WPM={WPM} CPM={CPM} reset={resetAll}/>
 		</div>
 	)
 }

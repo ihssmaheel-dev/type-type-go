@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react"
 import { calculateAccuracy, calculateCPM, calculateWPM } from "../utils/helper";
 
 type CorrectWrongType = "correct" | "wrong" | "";
-const useTypingLogic = (paragraph: string, maxTime: number, timeLeft: number) => {
+const useTypingLogic = (paragraph: string, maxTime: number, timeLeft: number, startTimer) => {
 	const [charIndex, setCharIndex] = useState(0);
 	const [mistakes, setMistakes] = useState(0);
 	const [WPM, setWPM] = useState(0);
@@ -60,7 +60,10 @@ const useTypingLogic = (paragraph: string, maxTime: number, timeLeft: number) =>
 			const currentChar = characters[charIndex]?.textContent;
 
 			if(charIndex < characters.length && timeLeft > 0) {
-				if(!isTyping) setIsTyping(true);
+				if (!isTyping) {
+					setIsTyping(true);
+					startTimer();
+				}
 
 				setCharIndex((prevCharIndex) => prevCharIndex + 1);
 
@@ -93,6 +96,7 @@ const useTypingLogic = (paragraph: string, maxTime: number, timeLeft: number) =>
 		setCorrectWrong(Array(paragraph.length).fill(""));
 		charRefs.current = Array(paragraph.length).fill(null);
 		setErrors(0);
+		setIsTyping(false);
 	}
 
 	return { charIndex, charRefs, mistakes, WPM, CPM, accuracy, correctWrong, handleKeydown, resetTyping }
