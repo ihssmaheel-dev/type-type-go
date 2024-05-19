@@ -17,13 +17,13 @@ const Stats: React.FC<StatsProps> = ({
 	reset
 }) => {
 	return (
-		<div className="flex justify-between items-center mt-4 pt-2.5 text-xl border-t border-solid border-slate-900 text-slate-900">
-				<p>Time Left: <strong>{timeLeft}</strong></p>
-				<p>Mistakes: <strong>{mistakes}</strong></p>
-				<p>WPM: <strong>{WPM}</strong></p>
-				<p>CPM: <strong>{CPM}</strong></p>
-				<ResetButton reset={reset}/>
-			</div>
+		<div className='w-10/12 p-2 px-8 rounded-lg bg-gray-200 shadow text-lg font-bold flex items-center justify-between text-slate-900 select-none'>
+			<p>Time Left: <strong>{timeLeft}</strong></p>
+			<p>Mistakes: <strong>{mistakes}</strong></p>
+			<p>WPM: <strong>{WPM}</strong></p>
+			<p>CPM: <strong>{CPM}</strong></p>
+			<ResetButton reset={reset}/>
+		</div>
 	)
 }
 

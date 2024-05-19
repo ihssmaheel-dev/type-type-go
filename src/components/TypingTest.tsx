@@ -144,8 +144,8 @@ const TypingTest = () => {
 						correctWrong={correctWrong}
 						charRefs={charRefs}
 					/>
-					<Stats timeLeft={timeLeft} mistakes={mistakes} WPM={WPM} CPM={CPM} reset={reset} />
 			</div>
+			<Stats timeLeft={timeLeft} mistakes={mistakes} WPM={WPM} CPM={CPM} reset={reset} />
 		</div>
 	)
 }
