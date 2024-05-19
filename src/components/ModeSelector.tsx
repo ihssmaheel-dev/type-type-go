@@ -17,7 +17,7 @@ const ModeSelector: React.FC<ModeSelectorProps> = ({ mode, onModeChange }) => {
   };
 
   return (
-    <>
+    <div className='w-full flex items-center justify-between'>
       {Object.keys(icons).map((key) => (
         <React.Fragment key={key}>
           <ModeToggleButton
@@ -29,7 +29,7 @@ const ModeSelector: React.FC<ModeSelectorProps> = ({ mode, onModeChange }) => {
           {key !== 'lorem' && <span className="text-slate-600 mx-6"></span>}
         </React.Fragment>
       ))}
-    </>
+    </div>
   );
 };
 
