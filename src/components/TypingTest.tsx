@@ -7,153 +7,172 @@ import { faker } from '@faker-js/faker';
 import TypingModeSelector from './TypingModeSelector';
 
 const generateRandomParagraph = (count: number, mode: ModeType) => {
-	if(mode === "words") {
-		return faker.word.words(count).toLowerCase();
-	} else if (mode === "lorem") {
-		return faker.lorem.words(count).toLowerCase();
-	} else {
-		return faker.word.words(count).toLowerCase();
-	}
+  if (mode === "words") {
+    return faker.word.words(count).toLowerCase();
+  } else if (mode === "lorem") {
+    return faker.lorem.words(count).toLowerCase();
+  } else {
+    return faker.word.words(count).toLowerCase();
+  }
 }
 
 type CorrectWrongType = "correct" | "wrong" | "";
 type ModeType = "time" | "words" | "lorem";
 
 const TypingTest = () => {
-	const [mode, setMode] = useState<ModeType>("words");
-	const [maxWords, setMaxWords] = useState(50);
-	const [paragraph, setParagraph] = useState(generateRandomParagraph(maxWords, mode));
-	const [maxTime, setMaxTime] = useState(60);
-	const [timeLeft, setTimeLeft] = useState(maxTime);
-	const [mistakes, setMistakes] = useState(0);
-	const [charIndex, setCharIndex] = useState(0);
-	const [isTyping, setIsTyping] = useState(false);
-	const [WPM, setWPM] = useState(0);
-	const [CPM, setCPM] = useState(0);
-	const inputRef = useRef<HTMLInputElement | null>(null);
-	const charRefs = useRef<(HTMLSpanElement | null)[]>([]);
-	const [correctWrong, setCorrectWrong] = useState<CorrectWrongType[]>([]);
+  const [mode, setMode] = useState<ModeType>("words");
+  const [maxWords, setMaxWords] = useState(50);
+  const [paragraph, setParagraph] = useState(generateRandomParagraph(maxWords, mode));
+  const [maxTime, setMaxTime] = useState(60);
+  const [timeLeft, setTimeLeft] = useState(maxTime);
+  const [mistakes, setMistakes] = useState(0);
+  const [charIndex, setCharIndex] = useState(0);
+  const [isTyping, setIsTyping] = useState(false);
+  const [WPM, setWPM] = useState(0);
+  const [CPM, setCPM] = useState(0);
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  const charRefs = useRef<(HTMLSpanElement | null)[]>([]);
+  const [correctWrong, setCorrectWrong] = useState<CorrectWrongType[]>([]);
 
-	const handleFocus = () => {
-		inputRef.current?.focus();
-	}
+  const handleFocus = () => {
+    inputRef.current?.focus();
+  }
 
-	useEffect(() => {
-		inputRef.current?.focus();
-		setCorrectWrong(Array(charRefs.current.length).fill(''));
-	}, []);
+  useEffect(() => {
+    inputRef.current?.focus();
+    setCorrectWrong(Array(charRefs.current.length).fill(''));
+    charRefs.current = Array(paragraph.length).fill(null);
+  }, [paragraph]);
 
-	useEffect(() => {
-		let interval: ReturnType<typeof setInterval> | undefined;
-		if (isTyping && timeLeft > 0) {
-			interval = setInterval(() => {
-				setTimeLeft(prevTimeLeft => (prevTimeLeft - 1));
+  useEffect(() => {
+    let interval: ReturnType<typeof setInterval> | undefined;
+    if (isTyping && timeLeft > 0) {
+      interval = setInterval(() => {
+        setTimeLeft(prevTimeLeft => (prevTimeLeft - 1));
 
-				const correctChars = charIndex - mistakes;
-				const totalTime = maxTime - timeLeft;
+        const correctChars = charIndex - mistakes;
+        const totalTime = maxTime - timeLeft;
 
-				setCPM(calculateCPM(correctChars, totalTime));
-				setWPM(calculateWPM(correctChars, totalTime));
-			}, 1000);
-		} else {
-			setIsTyping(false);
-			clearInterval(interval);
+        setCPM(calculateCPM(correctChars, totalTime));
+        setWPM(calculateWPM(correctChars, totalTime));
+      }, 1000);
+    } else {
+      setIsTyping(false);
+      clearInterval(interval);
+    }
+
+    return () => clearInterval(interval);
+  }, [isTyping, timeLeft]);
+
+  useEffect(() => {
+    reset();
+  }, [maxWords, maxTime, mode]);
+
+  useEffect(() => {
+		if(charIndex > 400) {
+			scrollToEnd();
 		}
+  }, [paragraph, charIndex]);
 
-		return () => clearInterval(interval);
-	}, [isTyping, timeLeft]);
+  const scrollToEnd = () => {
+    const container = document.getElementById('typing-container');
+    if (container) {
+      container.scrollTop = container.scrollHeight;
+    }
+  }
 
-	const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-		const characters = charRefs.current;
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const characters = charRefs.current;
 
-		if (isTyping && e.code === 'Backspace') {
-			if(charIndex < 0) return;
-			
-			setCharIndex((prevIndex) => prevIndex - 1);
-			const isWrong = correctWrong[charIndex - 1] === 'wrong'; 
-			isWrong && setMistakes((prevMistakes) => prevMistakes - 1); 
+    if (isTyping && e.code === 'Backspace') {
+      if (charIndex < 0) return;
 
-			setCorrectWrong((prevCorrectWrong) => {
-				const newCorrectWrong = [...prevCorrectWrong];
-				newCorrectWrong[charIndex - 1] = '';
+      setCharIndex((prevIndex) => prevIndex - 1);
+      const isWrong = correctWrong[charIndex - 1] === 'wrong';
+      isWrong && setMistakes((prevMistakes) => prevMistakes - 1);
 
-				return newCorrectWrong;
-			});
-		}
+      setCorrectWrong((prevCorrectWrong) => {
+        const newCorrectWrong = [...prevCorrectWrong];
+        newCorrectWrong[charIndex - 1] = '';
 
-		if (e.key.length === 1) {
-			const typedChar = e.key;
-			const currentChar = characters[charIndex]?.textContent;
+        return newCorrectWrong;
+      });
+    }
 
-			if (charIndex < characters.length && timeLeft > 0) {
-				if (!isTyping) setIsTyping(true);
+    if (e.key.length === 1) {
+      const typedChar = e.key;
+      const currentChar = characters[charIndex]?.textContent;
 
-				setCharIndex((prevIndex) => prevIndex + 1);
+      if (charIndex < characters.length && timeLeft > 0) {
+        if (!isTyping) setIsTyping(true);
 
-				setCorrectWrong((prevCorrectWrong) => {
-					const newCorrectWrong = [...prevCorrectWrong];
-					newCorrectWrong[charIndex] = typedChar === currentChar ? 'correct' : 'wrong';
-					if (typedChar !== currentChar) {
-						setMistakes((prevMistakes) => prevMistakes + 1);
-					}
+        setCharIndex((prevIndex) => prevIndex + 1);
 
-					return newCorrectWrong;
-				});
+        setCorrectWrong((prevCorrectWrong) => {
+          const newCorrectWrong = [...prevCorrectWrong];
+          newCorrectWrong[charIndex] = typedChar === currentChar ? 'correct' : 'wrong';
+          if (typedChar !== currentChar) {
+            setMistakes((prevMistakes) => prevMistakes + 1);
+          }
 
-				if (charIndex === characters.length - 1) setIsTyping(false);
-			} else {
-				setIsTyping(false);
-			}
-		}
-	};
+          return newCorrectWrong;
+        });
 
-	const reset = () => {
-		const newParagraph = generateRandomParagraph(maxWords, mode);
-		setParagraph(newParagraph);
-		setIsTyping(false);
-		setTimeLeft(maxTime);
-		setCharIndex(0);
-		setMistakes(0);
-		setCPM(0);
-		setWPM(0);
-		setCorrectWrong(Array(charRefs.current.length).fill(""));
-		inputRef.current?.focus();
-	}
+        if (charIndex === characters.length - 1) setIsTyping(false);
+      } else {
+        setIsTyping(false);
+      }
+    }
+  };
 
-	const handleTimeChange = (time: number) => {
-		setMaxTime(time);
-		setTimeLeft(time);
-		reset();
-	}
+  const handleTimeChange = (time: number) => {
+    setMaxTime(time);
+    setTimeLeft(time);
+    reset();
+  }
 
-	const handleWordChange = (words: number) => {
-		setMaxWords(words);
-		reset();
-	}
+  const handleWordChange = (words: number) => {
+    setMaxWords(words);
+    reset();
+  }
 
-	const handleModeChange = (mode: ModeType) => {
-		setMode(mode);
-		reset();
-	}
+  const handleModeChange = (mode: ModeType) => {
+    setMode(mode);
+    reset();
+  }
 
-	return (
-		<div className='min-h-screen bg-slate-900 flex flex-col items-center justify-center font-noto-sans-mono tracking-wider px-12' onClick={handleFocus}>
-			<TypingModeSelector mode={mode} maxWords={maxWords} maxTime={maxTime} onChangeTime={handleTimeChange} onChangeWords={handleWordChange} onModeChange={handleModeChange}/>
-			<div className={`w-10/12 m-4 p-8 rounded-lg bg-gray-200 shadow`}>
-					<UserInput
-						inputRef={inputRef}
-						handleKeyDown={handleKeyDown}
-					/>
-					<TextDisplay
-						paragraph={paragraph}
-						charIndex={charIndex}
-						correctWrong={correctWrong}
-						charRefs={charRefs}
-					/>
-			</div>
-			<Stats timeLeft={timeLeft} mistakes={mistakes} WPM={WPM} CPM={CPM} reset={reset} />
-		</div>
-	)
+  const reset = () => {
+    const newParagraph = generateRandomParagraph(maxWords, mode);
+    setParagraph(newParagraph);
+    setIsTyping(false);
+    setTimeLeft(maxTime);
+    setCharIndex(0);
+    setMistakes(0);
+    setCPM(0);
+    setWPM(0);
+    setCorrectWrong(Array(charRefs.current.length).fill(""));
+    charRefs.current = Array(newParagraph.length).fill(null);
+    inputRef.current?.focus();
+  }
+
+  return (
+    <div className='min-h-screen bg-slate-900 flex flex-col items-center justify-center font-noto-sans-mono tracking-wider px-12' onClick={handleFocus}>
+      <TypingModeSelector mode={mode} maxWords={maxWords} maxTime={maxTime} onChangeTime={handleTimeChange} onChangeWords={handleWordChange} onModeChange={handleModeChange}/>
+      <div id="typing-container" className={`w-10/12 max-h-80 overflow-y-auto m-4 p-8 rounded-lg bg-gray-200 shadow`} style={{ scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }}>
+        <UserInput
+          inputRef={inputRef}
+          handleKeyDown={handleKeyDown}
+        />
+        <TextDisplay
+          paragraph={paragraph}
+          charIndex={charIndex}
+          correctWrong={correctWrong}
+          charRefs={charRefs}
+        />
+      </div>
+      <Stats mode={mode} timeLeft={timeLeft} mistakes={mistakes} WPM={WPM} CPM={CPM} reset={reset} />
+    </div>
+  )
 }
 
 export default TypingTest;
