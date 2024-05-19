@@ -6,8 +6,14 @@ import { calculateCPM, calculateWPM } from '../Utils/helper';
 import { faker } from '@faker-js/faker';
 import TypingModeSelector from './TypingModeSelector';
 
-const generateRandomParagraph = (count: number) => {
-	return faker.word.words(count).toLowerCase();
+const generateRandomParagraph = (count: number, mode: ModeType) => {
+	if(mode === "words") {
+		return faker.word.words(count).toLowerCase();
+	} else if (mode === "lorem") {
+		return faker.lorem.words(count).toLowerCase();
+	} else {
+		return faker.word.words(count).toLowerCase();
+	}
 }
 
 type CorrectWrongType = "correct" | "wrong" | "";
@@ -16,7 +22,7 @@ type ModeType = "time" | "words" | "lorem";
 const TypingTest = () => {
 	const [mode, setMode] = useState<ModeType>("words");
 	const [maxWords, setMaxWords] = useState(50);
-	const [paragraph, setParagraph] = useState(generateRandomParagraph(maxWords));
+	const [paragraph, setParagraph] = useState(generateRandomParagraph(maxWords, mode));
 	const [maxTime, setMaxTime] = useState(60);
 	const [timeLeft, setTimeLeft] = useState(maxTime);
 	const [mistakes, setMistakes] = useState(0);
@@ -102,7 +108,7 @@ const TypingTest = () => {
 	};
 
 	const reset = () => {
-		const newParagraph = generateRandomParagraph(maxWords);
+		const newParagraph = generateRandomParagraph(maxWords, mode);
 		setParagraph(newParagraph);
 		setIsTyping(false);
 		setTimeLeft(maxTime);
