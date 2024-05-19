@@ -1,8 +1,22 @@
 import React from 'react'
 
-const TypingTestModeButton = () => {
+type ModeType = "time" | "words" | "lorem";
+
+interface TypingTestModeButtonProps {
+  mode: ModeType;
+  icon: JSX.Element;
+  isActive: boolean;
+  onClick: () => void;
+}
+
+const TypingTestModeButton: React.FC<TypingTestModeButtonProps> = ({ mode, icon, isActive, onClick }) => {
 	return (
-		<div>TypingTestModeButton</div>
+		<button
+    className={`flex items-center justify-between ${isActive ? 'text-slate-900' : ''}`}
+    onClick={onClick}
+  >
+    {icon} {mode}
+  </button>
 	)
 }
 

@@ -1,4 +1,3 @@
-import React from 'react'
 import { FaAt, FaHashtag } from 'react-icons/fa'
 
 const TypingTestOptions = () => {

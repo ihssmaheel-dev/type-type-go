@@ -1,5 +1,4 @@
 import React from 'react';
-import { FaAlignLeft, FaAt, FaFont, FaHashtag, FaHourglass } from 'react-icons/fa';
 import TypingTestOptions from './TypingTestOptions';
 import TypingModeSelector from './TypingModeSelector';
 import TimeWordSelector from './TimeWordSelector';

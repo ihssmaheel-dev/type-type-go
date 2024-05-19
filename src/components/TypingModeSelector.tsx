@@ -1,23 +1,8 @@
 import React from 'react';
 import { FaAlignLeft, FaFont, FaHourglass } from 'react-icons/fa';
+import TypingTestModeButton from './TypingTestModeButton';
 
 type ModeType = "time" | "words" | "lorem";
-
-interface ModeButtonProps {
-  mode: ModeType;
-  icon: JSX.Element;
-  isActive: boolean;
-  onClick: () => void;
-}
-
-const ModeButton: React.FC<ModeButtonProps> = ({ mode, icon, isActive, onClick }) => (
-  <button
-    className={`flex items-center justify-between ${isActive ? 'text-slate-900' : ''}`}
-    onClick={onClick}
-  >
-    {icon} {mode}
-  </button>
-);
 
 interface TypingModeSelectorProps {
   mode: ModeType;
@@ -35,7 +20,7 @@ const TypingModeSelector: React.FC<TypingModeSelectorProps> = ({ mode, onModeCha
     <>
       {Object.keys(icons).map((key) => (
         <React.Fragment key={key}>
-          <ModeButton
+          <TypingTestModeButton
             mode={key as ModeType}
             icon={icons[key as ModeType]}
             isActive={mode === key}

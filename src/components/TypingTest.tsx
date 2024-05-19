@@ -1,11 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import useParagraphGenerator from '../hooks/useParagraphGenerator';
 import useTimer from '../hooks/useTimer';
 import useTypingLogic from '../hooks/useTypingLogic';
-import TypingModeSelector from './TypingModeSelector';
-import UserInput from './UserInput';
-import TextDisplay from './TextDisplay';
-import Stats from './Stats';
 import TypingTestFooter from './TypingTestFooter';
 import TypingContainer from "./TypingContainer";
 import TypingTestHeader from './TypingTestHeader';
