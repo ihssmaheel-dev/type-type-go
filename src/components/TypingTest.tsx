@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import TextDisplay from './TextDisplay';
 import UserInput from './UserInput';
 import Stats from './Stats';
-import { calculateCPM, calculateWPM } from '../utils/helper';
+import { calculateAccuracy, calculateCPM, calculateWPM } from '../utils/helper';
 import { faker } from '@faker-js/faker';
 import TypingModeSelector from './TypingModeSelector';
 
@@ -30,6 +30,8 @@ const TypingTest = () => {
   const [isTyping, setIsTyping] = useState(false);
   const [WPM, setWPM] = useState(0);
   const [CPM, setCPM] = useState(0);
+	const [errors, setErrors] = useState(0);
+	const [accuracy, setAccuracy] = useState(100);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const charRefs = useRef<(HTMLSpanElement | null)[]>([]);
   const [correctWrong, setCorrectWrong] = useState<CorrectWrongType[]>([]);
@@ -113,12 +115,15 @@ const TypingTest = () => {
           newCorrectWrong[charIndex] = typedChar === currentChar ? 'correct' : 'wrong';
           if (typedChar !== currentChar) {
             setMistakes((prevMistakes) => prevMistakes + 1);
+						setErrors((prevErrors) => prevErrors + 1);
           }
 
           return newCorrectWrong;
         });
 
         if (charIndex === characters.length - 1) setIsTyping(false);
+
+        setAccuracy(calculateAccuracy(charIndex, errors, typedChar, currentChar));
       } else {
         setIsTyping(false);
       }
@@ -153,8 +158,10 @@ const TypingTest = () => {
     setTimeLeft(maxTime);
     setCharIndex(0);
     setMistakes(0);
+		setErrors(0);
     setCPM(0);
     setWPM(0);
+		setAccuracy(100);
     setCorrectWrong(Array(charRefs.current.length).fill(""));
     charRefs.current = Array(newParagraph.length).fill(null);
     inputRef.current?.focus();
@@ -175,7 +182,7 @@ const TypingTest = () => {
           charRefs={charRefs}
         />
       </div>
-      <Stats mode={mode} timeLeft={timeLeft} mistakes={mistakes} WPM={WPM} CPM={CPM} reset={reset} />
+      <Stats mode={mode} timeLeft={timeLeft} mistakes={mistakes} accuracy={accuracy} WPM={WPM} CPM={CPM} reset={reset} />
     </div>
   )
 }
