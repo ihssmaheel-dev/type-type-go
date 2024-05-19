@@ -13,7 +13,7 @@ interface TypingModeSelectorProps {
 }
 
 const TypingModeSelector: React.FC<TypingModeSelectorProps> = ({ mode, maxWords, maxTime, onModeChange, onChangeTime, onChangeWords }) => {
-	const timeOptions = [15, 30, 60, 120];
+	const timeOptions = [15, 30, 60];
 	const wordOptions = [10, 25, 50, 100];
 
 	return (
