@@ -1,7 +1,10 @@
 import React from 'react'
 import ResetButton from './ResetButton';
 
+type ModeType = "time" | "words" | "lorem";
+
 interface StatsProps {
+	mode: ModeType 
 	timeLeft: number;
 	mistakes: number;
 	WPM: number;
@@ -10,6 +13,7 @@ interface StatsProps {
 }
 
 const Stats: React.FC<StatsProps> = ({
+	mode,
 	timeLeft,
 	mistakes,
 	WPM,
@@ -18,7 +22,9 @@ const Stats: React.FC<StatsProps> = ({
 }) => {
 	return (
 		<div className='w-10/12 p-2 px-8 rounded-lg bg-gray-200 shadow text-lg font-bold flex items-center justify-between text-slate-900 select-none'>
-			<p>Time Left: <strong>{timeLeft}</strong></p>
+			{
+				mode === "time" ? <p>Time Left: <strong>{timeLeft}</strong></p> : ""  
+			}
 			<p>Mistakes: <strong>{mistakes}</strong></p>
 			<p>WPM: <strong>{WPM}</strong></p>
 			<p>CPM: <strong>{CPM}</strong></p>
