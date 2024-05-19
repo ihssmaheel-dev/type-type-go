@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import TextDisplay from './TextDisplay';
 import UserInput from './UserInput';
 import Stats from './Stats';
-import { calculateCPM, calculateWPM } from '../Utils/helper';
+import { calculateCPM, calculateWPM } from '../utils/helper';
 import { faker } from '@faker-js/faker';
 import TypingModeSelector from './TypingModeSelector';
 
