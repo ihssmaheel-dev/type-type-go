@@ -44,14 +44,10 @@ const TypingTestApp = () => {
 
 	const handleModeChange = (newMode: ModeType) => {
 		setMode(newMode);
-		if (newMode === "time") {
-			setMaxWords(200);
-			setMaxTime(60);
-		} else {
-			setMaxWords(50);
-			setMaxTime(60_000);
-		}
-
+		const newMaxWords = newMode === "time" ? 200 : 50;
+		const newMaxTime = newMode === "time" ? 60 : 60_000;
+		setMaxWords(newMaxWords);
+		setMaxTime(newMaxTime);
 		generateNewParagraph();
 		resetTyping();
 		resetTimer();
