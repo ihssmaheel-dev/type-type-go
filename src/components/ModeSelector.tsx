@@ -18,15 +18,14 @@ const ModeSelector: React.FC<ModeSelectorProps> = ({ mode, onModeChange }) => {
 
   return (
     <div className='w-full flex items-center justify-between'>
-      {Object.keys(icons).map((key) => (
-        <React.Fragment key={key}>
-          <ModeToggleButton
-            mode={key as ModeType}
-            icon={icons[key as ModeType]}
-            isActive={mode === key}
-            onClick={() => onModeChange(key as ModeType)}
-          />
-        </React.Fragment>
+      {Object.entries(icons).map(([key, icon]) => (
+        <ModeToggleButton
+          key={key}
+          mode={key as ModeType}
+          icon={icon}
+          isActive={mode === key}
+          onClick={() => onModeChange(key as ModeType)}
+        />
       ))}
     </div>
   );
