@@ -1,8 +1,7 @@
 import React from 'react';
 import { FaAlignLeft, FaFont, FaHourglass } from 'react-icons/fa';
 import ModeToggleButton from './ModeToggleButton';
-
-type ModeType = "time" | "words" | "lorem";
+import { ModeType } from '../types';
 
 interface ModeSelectorProps {
   mode: ModeType;

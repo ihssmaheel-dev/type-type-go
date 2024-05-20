@@ -2,8 +2,7 @@ import React from 'react';
 import TypingOptionsBar from './TypingOptionsBar';
 import ModeSelectorContainer from './ModeSelectorContainer';
 import SoundToggleButton from './SoundToggleButton';
-
-type ModeType = "time" | "words" | "lorem";
+import { ModeType } from '../types';
 
 interface TypingTestHeaderBarProps {
 	mode: ModeType;

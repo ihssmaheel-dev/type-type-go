@@ -1,9 +1,10 @@
 import React from 'react'
+import { CorrectWrongType } from '../types';
 
 interface TypingTextDisplayProps {
 	paragraph: string;
 	charIndex: number;
-	correctWrong: ("correct" | "wrong" | "")[];
+	correctWrong: CorrectWrongType[];
 	charRefs: React.MutableRefObject<(HTMLSpanElement | null)[]>
 }
 

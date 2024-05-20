@@ -1,7 +1,6 @@
 import { faker } from "@faker-js/faker";
 import { useEffect, useState } from "react";
-
-type ModeType = "words" | "time" | "lorem";
+import { ModeType } from "../types";
 
 const generateRandomParagraph = (mode: ModeType, count: number) => {
 	switch (mode) {

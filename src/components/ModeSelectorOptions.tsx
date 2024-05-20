@@ -1,8 +1,7 @@
 import React from 'react';
 import TimeSelectionOptions from './TimeSelectionOptions';
 import WordSelectionOptions from './WordsSelectionOptions';
-
-type ModeType = "time" | "words" | "lorem";
+import { ModeType } from '../types';
 
 interface ModeSelectorOptionsProps {
   mode: ModeType;

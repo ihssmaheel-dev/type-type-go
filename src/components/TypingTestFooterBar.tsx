@@ -1,8 +1,7 @@
 import React from 'react'
 import TypingStatsDisplay from './TypingStatsDisplay'
 import RefreshButton from './RefreshButton';
-
-type ModeType = "time" | "words" | "lorem";
+import { ModeType } from '../types';
 
 interface TypingTestFooterBarProps {
 	mode: ModeType 

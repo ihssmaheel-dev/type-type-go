@@ -1,6 +1,5 @@
 import React from 'react'
-
-type ModeType = "time" | "words" | "lorem";
+import { ModeType } from '../types';
 
 interface TypingStatsDisplayProps {
 	mode: ModeType 

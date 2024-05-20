@@ -5,8 +5,7 @@ import useTypingLogic from '../hooks/useTypingLogic';
 import TypingTestFooterBar from './TypingTestFooterBar';
 import TypingDisplayContainer from "./TypingDisplayContainer";
 import TypingTestHeaderBar from './TypingTestHeaderBar';
-
-type ModeType = "words" | "time" | "lorem";
+import { ModeType } from '../types';
 
 const TypingTestApp = () => {
 	const [mode, setMode] = useState<ModeType>("words");

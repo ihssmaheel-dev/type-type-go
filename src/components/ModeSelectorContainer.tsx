@@ -1,8 +1,7 @@
 import React from 'react'
 import ModeSelector from './ModeSelector';
 import ModeSelectorOptions from './ModeSelectorOptions';
-
-type ModeType = "time" | "words" | "lorem";
+import { ModeType } from '../types';
 
 interface ModeSelectorContainerProps {
 	mode: ModeType;
