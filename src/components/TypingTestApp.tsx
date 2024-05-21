@@ -6,6 +6,7 @@ import TypingTestFooterBar from './TypingTestFooterBar';
 import TypingDisplayContainer from "./TypingDisplayContainer";
 import TypingTestHeaderBar from './TypingTestHeaderBar';
 import { ModeType } from '../types';
+import useSound from '../hooks/useSound';
 
 const TypingTestApp = () => {
 	const [mode, setMode] = useState<ModeType>("words");
@@ -15,7 +16,8 @@ const TypingTestApp = () => {
 
 	const { paragraph, generateNewParagraph } = useParagraphGenerator(mode, maxWords);
 	const { timeLeft, startTimer, resetTimer, updateMaxTime } = useTimer(maxTime);
-	const { charIndex, charRefs, mistakes, WPM, CPM, accuracy, correctWrong, handleKeydown, resetTyping } = useTypingLogic(paragraph, maxTime, timeLeft, startTimer);
+	const { play, toggleSound, isEnabled } = useSound();
+	const { charIndex, charRefs, mistakes, WPM, CPM, accuracy, correctWrong, handleKeydown, resetTyping } = useTypingLogic(paragraph, maxTime, timeLeft, startTimer, play);
 
 	const inputRef = useRef<HTMLInputElement | null>(null);
 	const containerRef = useRef<HTMLDivElement |  null>(null);
