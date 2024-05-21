@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react"
 import { calculateAccuracy, calculateCPM, calculateWPM } from "../utils/helper";
 import { CorrectWrongType } from "../types";
 
-const useTypingLogic = (paragraph: string, maxTime: number, timeLeft: number, startTimer: () => void) => {
+const useTypingLogic = (paragraph: string, maxTime: number, timeLeft: number, startTimer: () => void, play) => {
 	const [charIndex, setCharIndex] = useState(0);
 	const [mistakes, setMistakes] = useState(0);
 	const [WPM, setWPM] = useState(0);
@@ -11,8 +11,7 @@ const useTypingLogic = (paragraph: string, maxTime: number, timeLeft: number, st
 	const [correctWrong, setCorrectWrong] = useState<CorrectWrongType[]>([]);
 	const [isTyping, setIsTyping] = useState(false);
 	const [errors, setErrors] = useState(0);
-	const charRefs = useRef<(HTMLSpanElement | null)[]>([]);
-	
+	const charRefs = useRef<(HTMLSpanElement | null)[]>([]);	
 
 	useEffect(() => {
 		setCorrectWrong(Array(paragraph.length).fill(""));
@@ -40,6 +39,11 @@ const useTypingLogic = (paragraph: string, maxTime: number, timeLeft: number, st
 	const handleKeydown = (e: React.KeyboardEvent<HTMLInputElement>) => {
 		const characters = charRefs.current;
 
+		if(isTyping && e.code === "Space") {
+			if(charIndex < 0) return;
+			play("space");
+		}
+
 		if(isTyping && e.code === "Backspace") {
 			if(charIndex < 0) return;
 
@@ -65,12 +69,14 @@ const useTypingLogic = (paragraph: string, maxTime: number, timeLeft: number, st
 					startTimer();
 				}
 
+				play("key");
 				setCharIndex((prevCharIndex) => prevCharIndex + 1);
 
 				setCorrectWrong((prevCorrectWrong) => {
 					const newCorrectWrong = [...prevCorrectWrong];
 					newCorrectWrong[charIndex] = typedChar === currentChar ? "correct" : "wrong";
 					if(typedChar !== currentChar) {
+						play("error");
 						setMistakes((prevMistakes) => prevMistakes + 1);
 						setErrors((prevErrors) => prevErrors + 1);
 					}
