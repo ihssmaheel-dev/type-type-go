@@ -5,10 +5,10 @@ const useSound = () => {
     const [spaceAudio] = useState(new Audio("sounds/spacebar-sound.mp3"));
     const [errorAudio] = useState(new Audio("sounds/error-beep.mp3"));
     const [isPlaying, setIsplaying] = useState(false);
-    const [isEnabled, setIsEnabled] = useState(true);
+    const [isSoundEnabled, setIsSoundEnabled] = useState(true);
 
     const play = (key: string) => {
-        if(isEnabled) {
+        if(isSoundEnabled) {
             if(key === "space") {
                 spaceAudio.currentTime = 0;
                 spaceAudio.play();
@@ -24,7 +24,7 @@ const useSound = () => {
         }
     }
 
-    const toggleSound = () => setIsEnabled(!isEnabled);
+    const toggleSound = () => setIsSoundEnabled(!isSoundEnabled);
 
     useEffect(() => {
         const handleEnded = () => setIsplaying(false);
@@ -40,7 +40,7 @@ const useSound = () => {
         }
     }, [keyAudios, spaceAudio, errorAudio]);
 
-    return { play, toggleSound, isEnabled };
+    return { play, toggleSound, isSoundEnabled };
 }
 
 export default useSound;
