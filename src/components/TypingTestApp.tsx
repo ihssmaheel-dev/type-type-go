@@ -16,7 +16,7 @@ const TypingTestApp = () => {
 
 	const { paragraph, generateNewParagraph } = useParagraphGenerator(mode, maxWords);
 	const { timeLeft, startTimer, resetTimer, updateMaxTime } = useTimer(maxTime);
-	const { play, toggleSound, isEnabled } = useSound();
+	const { play, toggleSound, isSoundEnabled } = useSound();
 	const { charIndex, charRefs, mistakes, WPM, CPM, accuracy, correctWrong, handleKeydown, resetTyping } = useTypingLogic(paragraph, maxTime, timeLeft, startTimer, play);
 
 	const inputRef = useRef<HTMLInputElement | null>(null);
@@ -66,7 +66,7 @@ const TypingTestApp = () => {
 
 	return (
 		<div className='min-h-screen px-12 bg-slate-900 flex flex-col items-center justify-center font-noto-sans-mono tracking-wider' onClick={handleFocus}>
-			<TypingTestHeaderBar mode={mode} maxWords={maxWords} maxTime={maxTime} onChangeTime={updateMaxTime} onChangeWords={setMaxWords} onModeChange={handleModeChange} />
+			<TypingTestHeaderBar mode={mode} maxWords={maxWords} maxTime={maxTime} onChangeTime={updateMaxTime} onChangeWords={setMaxWords} onModeChange={handleModeChange} isSoundEnabled={isSoundEnabled} toggleSound={toggleSound}/>
 			<TypingDisplayContainer containerRef={containerRef} inputRef={inputRef} handleKeydown={handleKeydown} paragraph={paragraph} charIndex={charIndex} correctWrong={correctWrong} charRefs={charRefs} />
 			<TypingTestFooterBar mode={mode} timeLeft={timeLeft} mistakes={mistakes} accuracy={accuracy} WPM={WPM} CPM={CPM} reset={resetAll} />
 		</div>

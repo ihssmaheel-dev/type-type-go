@@ -11,12 +11,14 @@ interface TypingTestHeaderBarProps {
 	onModeChange: (mode: ModeType) => void;
 	onChangeTime: (time: number) => void;
 	onChangeWords: (words: number) => void;
+	isSoundEnabled: Boolean,
+	toggleSound: () => void;
 }
 
-const TypingTestHeaderBar: React.FC<TypingTestHeaderBarProps> = ({ mode, maxWords, maxTime, onModeChange, onChangeTime, onChangeWords }) => {
+const TypingTestHeaderBar: React.FC<TypingTestHeaderBarProps> = ({ mode, maxWords, maxTime, onModeChange, onChangeTime, onChangeWords, isSoundEnabled, toggleSound }) => {
 	return (
 		<div className='w-10/12 flex text-lg font-bold text-slate-500 shadow select-none'>
-			<SoundToggleButton />
+			<SoundToggleButton isSoundEnabled={isSoundEnabled} toggleSound={toggleSound}/>
 			<TypingOptionsBar />
 			<ModeSelectorContainer mode={mode} onModeChange={onModeChange} maxTime={maxTime} onChangeTime={onChangeTime} maxWords={maxWords} onChangeWords={onChangeWords}/>
 		</div>
