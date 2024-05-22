@@ -1,46 +1,40 @@
-import { useEffect, useState } from "react"
+import { useState, useCallback, useRef } from "react";
 
-const useSound = () => {
-    const [keyAudios] = useState([new Audio("sounds/typing-sound-1.mp3"), new Audio("sounds/typing-sound-2.mp3")]);
-    const [spaceAudio] = useState(new Audio("sounds/spacebar-sound.mp3"));
-    const [errorAudio] = useState(new Audio("sounds/error-beep.mp3"));
-    const [isPlaying, setIsplaying] = useState(false);
+type SoundKey = "key" | "space" | "error";
+
+interface UseSoundReturn {
+    play: (key: SoundKey) => void;
+    toggleSound: () => void;
+    isSoundEnabled: boolean;
+}
+
+const useSound = (): UseSoundReturn => {
+    const audioMap = useRef<Record<SoundKey, HTMLAudioElement | HTMLAudioElement[]>>({
+        key: new Audio("sounds/typing-sound-2.mp3"),
+        space: new Audio("sounds/spacebar-sound.mp3"),
+        error: new Audio("sounds/error-beep.mp3"),
+    });
+
     const [isSoundEnabled, setIsSoundEnabled] = useState(true);
 
-    const play = (key: string) => {
-        if(isSoundEnabled) {
-            if(key === "space") {
-                spaceAudio.currentTime = 0;
-                spaceAudio.play();
-            } else if (key === "error") {
-                errorAudio.currentTime = 0;
-                errorAudio.play();
-            } else if(key === "key") {
-                const randomIndex = Math.floor(Math.random() * keyAudios.length);
-                const keyAudio = keyAudios[randomIndex];
-                keyAudio.currentTime = 0;
-                keyAudio.play();
+    const play = useCallback((key: SoundKey) => {
+        if (isSoundEnabled) {
+            const audio = audioMap.current[key];
+            if (Array.isArray(audio)) {
+                const randomIndex = Math.floor(Math.random() * audio.length);
+                const randomAudio = audio[randomIndex];
+                randomAudio.currentTime = 0;
+                randomAudio.play();
+            } else {
+                audio.currentTime = 0;
+                audio.play();
             }
         }
-    }
+    }, [isSoundEnabled]);
 
-    const toggleSound = () => setIsSoundEnabled(!isSoundEnabled);
-
-    useEffect(() => {
-        const handleEnded = () => setIsplaying(false);
-
-        keyAudios.forEach(keyAudio => keyAudio.addEventListener("ended", handleEnded));
-        spaceAudio.addEventListener('ended', handleEnded);
-        errorAudio.addEventListener('ended', handleEnded);
-
-        return () => {
-            keyAudios.forEach(keyAudio => keyAudio.removeEventListener("ended", handleEnded));
-            spaceAudio.removeEventListener('ended', handleEnded);
-            errorAudio.removeEventListener('ended', handleEnded);
-        }
-    }, [keyAudios, spaceAudio, errorAudio]);
+    const toggleSound = useCallback(() => setIsSoundEnabled(prev => !prev), []);
 
     return { play, toggleSound, isSoundEnabled };
-}
+};
 
 export default useSound;
