@@ -39,12 +39,8 @@ const useTypingLogic = (paragraph: string, maxTime: number, timeLeft: number, st
 	const handleKeydown = (e: React.KeyboardEvent<HTMLInputElement>) => {
 		const characters = charRefs.current;
 
-		if(isTyping && e.code === "Space") {
-			if(charIndex < 0) return;
-			play("space");
-		}
-
 		if(isTyping && e.code === "Backspace") {
+			play("space")
 			if(charIndex < 0) return;
 
 			setCharIndex((prevCharIndex) => prevCharIndex - 1);
@@ -69,7 +65,6 @@ const useTypingLogic = (paragraph: string, maxTime: number, timeLeft: number, st
 					startTimer();
 				}
 
-				play("key");
 				setCharIndex((prevCharIndex) => prevCharIndex + 1);
 
 				setCorrectWrong((prevCorrectWrong) => {
@@ -79,6 +74,8 @@ const useTypingLogic = (paragraph: string, maxTime: number, timeLeft: number, st
 						play("error");
 						setMistakes((prevMistakes) => prevMistakes + 1);
 						setErrors((prevErrors) => prevErrors + 1);
+					} else {
+						play(e.code === "Space" ? "space" : "key")
 					}
 
 					return newCorrectWrong;
@@ -86,7 +83,8 @@ const useTypingLogic = (paragraph: string, maxTime: number, timeLeft: number, st
 
 				if(charIndex === characters.length - 1) setIsTyping(false);
 
-				setAccuracy(calculateAccuracy(charIndex, errors, typedChar, currentChar))
+				setAccuracy(calculateAccuracy(charIndex, errors, typedChar, currentChar));
+				
 			} else {
 				setIsTyping(false);
 			}
