@@ -10,6 +10,8 @@ import useSound from '../hooks/useSound';
 
 const TypingTestApp = () => {
 	const [mode, setMode] = useState<ModeType>("words");
+	const [isPuncEnabled, setIsPuncEnabled] = useState(false);
+	const [isNumEnabled, setIsNumEnabled] = useState(false);
 	const [maxWords, setMaxWords] = useState(50);
 	const [maxTime, setMaxTime] = useState(60_000);
 
@@ -58,6 +60,9 @@ const TypingTestApp = () => {
 		inputRef.current?.focus();
 	}
 
+	const togglePunc = () => setIsPuncEnabled(!isPuncEnabled);
+	const toggleNum = () => setIsNumEnabled(!isNumEnabled);
+
 	const resetAll = () => {
 		generateNewParagraph();
 		resetTyping();
@@ -66,7 +71,7 @@ const TypingTestApp = () => {
 
 	return (
 		<div className='min-h-screen px-12 bg-slate-900 flex flex-col items-center justify-center font-noto-sans-mono tracking-wider' onClick={handleFocus}>
-			<TypingTestHeaderBar mode={mode} maxWords={maxWords} maxTime={maxTime} onChangeTime={updateMaxTime} onChangeWords={setMaxWords} onModeChange={handleModeChange} isSoundEnabled={isSoundEnabled} toggleSound={toggleSound}/>
+			<TypingTestHeaderBar mode={mode} maxWords={maxWords} maxTime={maxTime} onChangeTime={updateMaxTime} onChangeWords={setMaxWords} onModeChange={handleModeChange} isSoundEnabled={isSoundEnabled} toggleSound={toggleSound} isPuncEnabled={isPuncEnabled} isNumEnabled={isNumEnabled} togglePunc={togglePunc} toggleNum={toggleNum}/>
 			<TypingDisplayContainer containerRef={containerRef} inputRef={inputRef} handleKeydown={handleKeydown} paragraph={paragraph} charIndex={charIndex} correctWrong={correctWrong} charRefs={charRefs} />
 			<TypingTestFooterBar mode={mode} timeLeft={timeLeft} mistakes={mistakes} accuracy={accuracy} WPM={WPM} CPM={CPM} reset={resetAll} />
 		</div>
