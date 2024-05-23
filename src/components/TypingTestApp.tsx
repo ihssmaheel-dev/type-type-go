@@ -16,7 +16,7 @@ const TypingTestApp = () => {
 	const [maxTime, setMaxTime] = useState(60_000);
 
 
-	const { paragraph, generateNewParagraph } = useParagraphGenerator(mode, maxWords);
+	const { paragraph, generateNewParagraph } = useParagraphGenerator(mode, maxWords, isPuncEnabled, isNumEnabled);
 	const { timeLeft, startTimer, resetTimer, updateMaxTime } = useTimer(maxTime);
 	const { play, toggleSound, isSoundEnabled } = useSound();
 	const { charIndex, charRefs, mistakes, WPM, CPM, accuracy, correctWrong, handleKeydown, resetTyping } = useTypingLogic(paragraph, maxTime, timeLeft, startTimer, play);
