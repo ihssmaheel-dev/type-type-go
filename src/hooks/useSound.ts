@@ -1,6 +1,5 @@
 import { useState, useCallback, useRef } from "react";
-
-type SoundKey = "key" | "space" | "error";
+import { SoundKey } from "../types";
 
 interface UseSoundReturn {
     play: (key: SoundKey) => void;
