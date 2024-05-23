@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react"
 import { calculateAccuracy, calculateCPM, calculateWPM } from "../utils/helper";
-import { CorrectWrongType } from "../types";
+import { CorrectWrongType, SoundKey } from "../types";
 
-const useTypingLogic = (paragraph: string, maxTime: number, timeLeft: number, startTimer: () => void, play: (key: string) => void) => {
+const useTypingLogic = (paragraph: string, maxTime: number, timeLeft: number, startTimer: () => void, play: (key: SoundKey) => void) => {
 	const [charIndex, setCharIndex] = useState(0);
 	const [mistakes, setMistakes] = useState(0);
 	const [WPM, setWPM] = useState(0);
