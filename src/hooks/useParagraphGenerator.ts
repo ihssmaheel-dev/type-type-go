@@ -3,13 +3,23 @@ import { useEffect, useState } from "react";
 import { ModeType } from "../types";
 
 const generateRandomParagraph = (mode: ModeType, count: number) => {
+	const getFilteredWords = (sourceFunc: () => string) => {
+		const words = [];
+		while (words.length < count) {
+			const newWords = sourceFunc().split(" ").filter(word => word.length <= 7);
+			words.push(...newWords.slice(0, count - words.length))
+		}
+
+		return words.join(" ");
+	};
+
 	switch (mode) {
 		case "words":
-			return faker.word.words(count);
+			return getFilteredWords(() => faker.word.words(count));
 		case "lorem":
-			return faker.lorem.words(count);
+			return getFilteredWords(() => faker.lorem.words(count));
 		default:
-			return faker.word.words(200);
+			return getFilteredWords(() => faker.word.words(200));
 	}
 }	
 
